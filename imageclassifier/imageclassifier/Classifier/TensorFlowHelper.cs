@@ -23,10 +23,6 @@ namespace imageclassifier
          */
         public static MappedByteBuffer LoadModelFile(Context context, string modelFile)
         {
-            //var res = context.Resources.OpenRawResource(Resource.Raw.mobilenet_quant_v1_224);
-
-            //AssetFileDescriptor fileDescriptor = context.Resources.OpenRawResourceFd(Resource.Raw.mobilenet_quant_v1_224);
-
             AssetFileDescriptor fileDescriptor = context.Assets.OpenFd(modelFile);
             FileInputStream inputStream = new FileInputStream(fileDescriptor.FileDescriptor);
             FileChannel fileChannel = inputStream.Channel;

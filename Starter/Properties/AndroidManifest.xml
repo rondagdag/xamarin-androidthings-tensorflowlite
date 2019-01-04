@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="net.dagdag.Starter">
+	<application android:allowBackup="true" android:icon="@mipmap/icon" android:label="@string/app_name">
+		<uses-library android:name="com.google.android.things" />
+	</application>
+	<uses-permission android:name="com.google.android.things.permission.MANAGE_SENSOR_DRIVERS" />
+	<uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
+	<uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO" />
+	<uses-sdk android:targetSdkVersion="26" />
+</manifest>
