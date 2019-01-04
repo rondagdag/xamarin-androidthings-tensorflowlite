@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5F1EF98B-3112-4EEC-A33F-4FC72952A47D}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>imageclassifier</RootNamespace>
+    <AssemblyName>imageclassifier</AssemblyName>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+<AndroidStoreUncompressedFileExtensions>.tflite</AndroidStoreUncompressedFileExtensions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Things">
+      <HintPath>..\packages\Xamarin.Android.Things.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop" />
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Adcv2x">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Adcv2x.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Ap102">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Ap102.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Bmx280">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Bmx280.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Button">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Button.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Cap12xx">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Cap12xx.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Gps">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Gps.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Ht16k33">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Ht16k33.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Lowpan">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Lowpan.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Matrixkeypad">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Matrixkeypad.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Mma7660fc">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Mma7660fc.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Motorhat">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Motorhat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Pwmservo">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Pwmservo.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Pwmspeaker">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Pwmspeaker.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Rainbowhat">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Rainbowhat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Sensehat">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Sensehat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Ssd1306">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Ssd1306.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Tm1637">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Tm1637.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Vcnl4200">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Vcnl4200.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Voicehat">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Voicehat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Things.Contrib.Driver.Zxgesturesensor">
+      <HintPath>..\packages\Xamarin.Android.Things.Contrib.Drivers.1.0.0.1\lib\monoandroid81\Xamarin.Android.Things.Contrib.Driver.Zxgesturesensor.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.TensorFlow.Lite">
+      <HintPath>..\packages\Xamarin.TensorFlow.Lite.1.9.0\lib\monoandroid81\Xamarin.TensorFlow.Lite.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CameraHandler.cs" />
+    <Compile Include="ImagePreprocessor.cs" />
+    <Compile Include="DescComparer.cs" />
+    <Compile Include="ObjectTypeHelper.cs" />
+    <Compile Include="Classifier\Recognition.cs" />
+    <Compile Include="Classifier\TensorFlowHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_camera.axml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable\sampledog_224x224.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+    <Folder Include="Classifier\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\labels.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInPackage>true</IncludeInPackage>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\LICENSE" />
+    <AndroidAsset Include="Assets\README.txt" />
+    <AndroidAsset Include="Assets\mobilenet_quant_v1_224.tflite" />
+
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>
