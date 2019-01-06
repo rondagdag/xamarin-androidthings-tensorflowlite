@@ -76,6 +76,8 @@ namespace imageclassifier
             matrix.PreTranslate(translateX, translateY);
 
             float scaleFactor = dst.Height / minDim;
+            //int RESIZE_SIZE = 256;
+            //float scaleFactor = RESIZE_SIZE / minDim;
             matrix.PostScale(scaleFactor, scaleFactor);
 
             // Rotate around the center if necessary.

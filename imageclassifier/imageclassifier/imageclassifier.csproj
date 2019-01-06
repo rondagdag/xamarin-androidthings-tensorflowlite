@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-<AndroidStoreUncompressedFileExtensions>.tflite</AndroidStoreUncompressedFileExtensions>
+<AndroidStoreUncompressedFileExtensions>.tflite,.lite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -150,6 +150,10 @@
     <AndroidAsset Include="Assets\README.txt" />
     <AndroidAsset Include="Assets\mobilenet_quant_v1_224.tflite" />
 
+    <AndroidAsset Include="Assets\optimized_graph.lite" />
+    <AndroidAsset Include="Assets\optimizedgraphlabels.txt" />
+    <AndroidAsset Include="Assets\optimized_graph_flowers.lite" />
+    <AndroidAsset Include="Assets\retrained_labels_flowers.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

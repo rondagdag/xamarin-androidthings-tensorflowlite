@@ -17,6 +17,7 @@ using System.Linq;
 using Android.Runtime;
 using static Android.Media.ImageReader;
 using System;
+using Java.Util;
 
 namespace imageclassifier
 {
@@ -32,12 +33,21 @@ namespace imageclassifier
         /** Image dimensions required by TF model */
         static int TF_INPUT_IMAGE_WIDTH = 224;
         static int TF_INPUT_IMAGE_HEIGHT = 224;
+
+        //static int TF_INPUT_IMAGE_WIDTH = 227;
+        //static int TF_INPUT_IMAGE_HEIGHT = 227;
         /** Dimensions of model inputs. */
         static int DIM_BATCH_SIZE = 1;
         static int DIM_PIXEL_SIZE = 3;
         /** TF model asset files */
         static string LABELS_FILE = "labels.txt";
         static string MODEL_FILE = "mobilenet_quant_v1_224.tflite";
+
+        //static string LABELS_FILE = "optimizedgraphlabels.txt";
+        //static string MODEL_FILE = "optimized_graph_flowers.lite";
+
+        //static string LABELS_FILE = "optimizedgraphlabels.txt";
+        //static string MODEL_FILE = "optimized_graph.lite";
 
         ButtonInputDriver mButtonDriver;
         bool mProcessing;
@@ -90,10 +100,11 @@ namespace imageclassifier
         {
             // Allocate space for the inference results
             var count = mLabels.Count;
-            byte[][] confidencePerLabel = new byte[1][];
 
             // Allocate buffer for image pixels.
             int[] intValues = new int[TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT];
+            //ByteBuffer imgData = ByteBuffer.AllocateDirect(
+            //        4 * DIM_BATCH_SIZE * TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT * DIM_PIXEL_SIZE);
             ByteBuffer imgData = ByteBuffer.AllocateDirect(
                     DIM_BATCH_SIZE * TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT * DIM_PIXEL_SIZE);
             imgData.Order(ByteOrder.NativeOrder());
@@ -103,22 +114,59 @@ namespace imageclassifier
 
             // Run inference on the network with the image bytes in imgData as input,
             // storing results on the confidencePerLabel array.
-            //Java.Lang.Object confidencePerLabelObject = confidencePerLabel;
-            //float[] outputs;
-            ByteBuffer outputData = ByteBuffer.Allocate(count);
-            //mTensorFlowLite.Run(imgData, confidencePerLabel);
-            mTensorFlowLite.Run(imgData, outputData);
-            outputData.Rewind();
-            byte[] arr = new byte[outputData.Remaining()];
-            outputData.Get(arr);
-            //confidencePerLabel = outputData.ToArray<byte[]>();
+            //ByteBuffer confidenceByteBuffer = ByteBuffer.Allocate(count);
+            //mTensorFlowLite.Run(imgData, confidenceByteBuffer);
+            //byte[] confidenceByteArray = ConvertResults(confidenceByteBuffer);
+
+            //var confidenceBuffer = FloatBuffer.Allocate(4 * count);
+
+
+            byte[][] confidence = new byte[1][];
+            confidence[0] = new byte[count];
+
+            var conf = Java.Lang.Object.FromArray<byte[]>(confidence);
+            mTensorFlowLite.Run(imgData, conf);
+
+            confidence = conf.ToArray<byte[]>();
+            List<Recognition> results = TensorFlowHelper.GetBestResults(confidence[0], mLabels);
+
+
+            /*float[][] confidence = new float[1][];
+            confidence[0] = new float[count];
+
+            var conf = Java.Lang.Object.FromArray<float[]>(confidence);
+            mTensorFlowLite.Run(imgData, conf);
+
+            confidence = conf.ToArray<float[]>();
+            List<Recognition> results = TensorFlowHelper.GetBestResults(confidence[0], mLabels);
+            */
+            //float[] confidenceArray = ConvertResults(confidenceBuffer.AsFloatBuffer());
+            //float[] confidenceByteArray = ConvertResultsFloat(confidenceBuffer, count);
+
             // Get the results with the highest confidence and map them to their labels
-            List<Recognition> results = TensorFlowHelper.GetBestResults(arr, mLabels);
+            //List<Recognition> results = TensorFlowHelper.GetBestResults(confidenceArray, mLabels);
+            //List<Recognition> results = TensorFlowHelper.GetBestResults(confidenceByteArray, mLabels);
             //List<Recognition> results = TensorFlowHelper.GetBestResults(confidencePerLabel, mLabels);
+
             // Report the results with the highest confidence
             OnPhotoRecognitionReady(results);
         }
 
+        private static byte[] ConvertResults(ByteBuffer outputData)
+        {
+            outputData.Rewind();
+            byte[] arr = new byte[outputData.Remaining()];
+            outputData.Get(arr);
+            return arr;
+        }
+
+        private static float[] ConvertResultsFloat(ByteBuffer outputData, int count)
+        {
+            outputData.Rewind();
+            float[] arr = new float[count];
+            outputData.AsFloatBuffer().Get(arr);
+            return arr;
+        }
 
         class CameraOnImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
         {
