@@ -31,26 +31,6 @@ namespace imageclassifier
             return fileChannel.Map(FileChannel.MapMode.ReadOnly, startOffset, declaredLength);
         }
 
-        /*public static ByteBuffer LoadModelFile(Context context, string modelFile)
-        {
-            var assets = context.Assets;
-            Java.Nio.ByteBuffer b;
-
-            using (BufferedStream sourceStream = new BufferedStream(assets.Open(modelFile)))
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    sourceStream.CopyTo(memoryStream);
-                    byte[] a = memoryStream.ToArray();
-                    b = Java.Nio.ByteBuffer.Wrap(a);
-                    b.Order(ByteOrder.NativeOrder());
-
-                }
-            }
-            return b;
-        }*/
-
-
         public static List<string> ReadLabels(Context context, string labelsFile)
         {
             AssetManager assetManager = context.Assets;
@@ -92,19 +72,24 @@ namespace imageclassifier
 
             return sortedLabels.Values.Take(RESULTS_TO_SHOW).ToList();
         }
-        /*public static List<Recognition> GetBestResults(byte[][] labelProbArray,
-                                                             List<string> labelList)
+        /*
+        * Find the best classifications for float values
+         */
+        public static List<Recognition> GetBestResults(float[] labelProbArray,
+                                                           List<string> labelList)
         {
             SortedList<float, Recognition> sortedLabels = new SortedList<float, Recognition>(new DescComparer<float>());
+
             for (int i = 0; i < labelList.Count; ++i)
             {
+                var confidence = (labelProbArray[i]);
                 Recognition r = new Recognition(i.ToString(),
-                        labelList[i], (labelProbArray[0][i] & 0xff) / 255.0f);
+                        labelList[i], confidence);
                 sortedLabels.Add(r.GetConfidence(), r);
             }
 
             return sortedLabels.Values.Take(RESULTS_TO_SHOW).ToList();
-        }*/
+        }
 
         /* Writes Image data into a {@code ByteBuffer}. */
         public static void ConvertBitmapToByteBuffer(Bitmap bitmap, int[] intValues, ByteBuffer imgData)
@@ -118,6 +103,7 @@ namespace imageclassifier
                     bitmap.Width, bitmap.Height);
             // Encode the image pixels into a byte buffer representation matching the expected
             // input of the Tensorflow model
+
             int pixel = 0;
             for (int i = 0; i < bitmap.Width; ++i)
             {
@@ -129,6 +115,30 @@ namespace imageclassifier
                     imgData.Put((sbyte)(val & 0xFF));
                 }
             }
+
+
+            /*for (int i = 0; i < intValues.Length; ++i)
+            {
+                int val = intValues[i];
+                imgData.Put((sbyte)((val >> 16) & 0xFF));
+                imgData.Put((sbyte)((val >> 8) & 0xFF));
+                imgData.Put((sbyte)(val & 0xFF));
+            }*/
+
+            /*int IMAGE_MEAN = 128;
+            float IMAGE_STD = 128.0f;
+            int pixel = 0;
+            for (int i = 0; i < bitmap.Width; ++i)
+            {
+                for (int j = 0; j < bitmap.Height; ++j)
+                {
+                    int val = intValues[pixel++];
+                    imgData.PutFloat((((val >> 16) & 0xFF) - IMAGE_MEAN) / IMAGE_STD);
+                    imgData.PutFloat((((val >> 8) & 0xFF) - IMAGE_MEAN) / IMAGE_STD);
+                    imgData.PutFloat((((val & 0xFF)) - IMAGE_MEAN) / IMAGE_STD);
+                }
+            }*/
+
         }
     }
 }
