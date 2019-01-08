@@ -108,6 +108,9 @@ namespace imageclassifier
             {
                 var val = intValues[i];
 
+                /*imgData.PutFloat(((val & 0xFF) - 104));
+                imgData.PutFloat((((val >> 8) & 0xFF) - 117));
+                imgData.PutFloat((((val >> 16) & 0xFF) - 123));*/
                 imgData.PutFloat(((val & 0xFF) - 104));
                 imgData.PutFloat((((val >> 8) & 0xFF) - 117));
                 imgData.PutFloat((((val >> 16) & 0xFF) - 123));

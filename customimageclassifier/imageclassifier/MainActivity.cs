@@ -106,13 +106,15 @@ namespace imageclassifier
             TensorFlowHelper.ConvertBitmapToByteBuffer(image, intValues, imgData);
 
             // Run inference on the network with the image bytes in imgData as input,
-            // storing results on the confidencePerLabel array.
+            // storing results on the confidencePerLabel array. initialize arrays.
             float[][] confidence = new float[1][];
             confidence[0] = new float[count];
 
+            //wrap it inside a Java Object
             var conf = FromArray<float[]>(confidence);
             mTensorFlowLite.Run(imgData, conf);
 
+            //convert it back
             confidence = conf.ToArray<float[]>();
             List<Recognition> results = TensorFlowHelper.GetBestResults(confidence[0], mLabels);
 
