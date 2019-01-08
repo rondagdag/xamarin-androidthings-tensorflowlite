@@ -100,8 +100,6 @@ namespace imageclassifier
             int[] intValues = new int[TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT];
             ByteBuffer imgData = ByteBuffer.AllocateDirect(
                     4 * DIM_BATCH_SIZE * TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT * DIM_PIXEL_SIZE);
-            //ByteBuffer imgData = ByteBuffer.AllocateDirect(
-            //        DIM_BATCH_SIZE * TF_INPUT_IMAGE_WIDTH * TF_INPUT_IMAGE_HEIGHT * DIM_PIXEL_SIZE);
             imgData.Order(ByteOrder.NativeOrder());
 
             // Read image data into buffer formatted for the TensorFlow model
@@ -112,7 +110,7 @@ namespace imageclassifier
             float[][] confidence = new float[1][];
             confidence[0] = new float[count];
 
-            var conf = Java.Lang.Object.FromArray<float[]>(confidence);
+            var conf = FromArray<float[]>(confidence);
             mTensorFlowLite.Run(imgData, conf);
 
             confidence = conf.ToArray<float[]>();
