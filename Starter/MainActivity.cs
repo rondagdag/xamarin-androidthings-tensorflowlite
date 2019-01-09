@@ -18,16 +18,8 @@ namespace Starter
     {
         static string TAG = "StarterActivity";
         PeripheralManager _manager;
-        ToggleButton _ledToggleView;
-
-        IGpio _redLED;
-        IGpio _buttonA;
-        AlphanumericDisplay _display;
-
-        SeekBar _ledBrightnessView;
 
         int count = 1;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -44,15 +36,18 @@ namespace Starter
             button.Click += delegate { button.Text = $"{count++} clicks!"; };
 
             SetupDemoShowPins();
-            SetupDemo1();
-            SetupDemo2();
-            SetupDemo3();
+            //SetupDemo1();
+            //SetupDemo2();
+            //SetupDemo3();
         }
 
         private void SetupDemoShowPins()
         {
             Log.Debug(TAG, String.Join(", ", _manager.GpioList));
         }
+
+        ToggleButton _ledToggleView;
+        IGpio _redLED;
 
         private void SetupDemo1()
         {
@@ -101,6 +96,7 @@ namespace Starter
 
         }
 
+        IGpio _buttonA;
         private void SetupDemo2()
         {
             try
@@ -131,6 +127,9 @@ namespace Starter
             _ledToggleView.Checked = !_ledToggleView.Checked;
             return true;
         }
+
+        AlphanumericDisplay _display;
+        SeekBar _ledBrightnessView;
 
         private void SetupDemo3()
         {
