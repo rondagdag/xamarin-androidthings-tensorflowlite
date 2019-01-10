@@ -23,10 +23,10 @@ using System.Threading.Tasks;
 namespace imageclassifier
 {
 
-    [Activity(Label = "imageclassifier", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "Custom Vision Classifier", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : Activity
     {
-        static string TAG = "ImageClassifierActivity";
+        static string TAG = "CustomVisionClassifier";
 
         /** Camera image capture size */
         static int PREVIEW_IMAGE_WIDTH = 640;
@@ -47,8 +47,8 @@ namespace imageclassifier
         ButtonInputDriver mButtonDriver;
         bool mProcessing;
 
-        ImageView mImage;
-        TextView mResultText;
+        ImageView _ImageView;
+        TextView _ResultText;
 
         Interpreter mTensorFlowLite;
         List<string> mLabels;
@@ -63,7 +63,7 @@ namespace imageclassifier
         {
             try
             {
-                mTensorFlowLite = new Interpreter(TensorFlowHelper.LoadModelFile(this, MODEL_FILE),2);
+                mTensorFlowLite = new Interpreter(TensorFlowHelper.LoadModelFile(this, MODEL_FILE), 2);
                 mLabels = TensorFlowHelper.ReadLabels(this, LABELS_FILE);
             }
             catch (IOException e)
@@ -82,15 +82,15 @@ namespace imageclassifier
 
 
         /*
-     * Process an image and identify what is in it. When done, the method
-     * {@link #onPhotoRecognitionReady(Collection)} must be called with the results of
-     * the image recognition process.
-     *
-     * @param image Bitmap containing the image to be classified. The image can be
-     *              of any size, but preprocessing might occur to resize it to the
-     *              format expected by the classification process, which can be time
-     *              and power consuming.
-     */
+         * Process an image and identify what is in it. When done, the method
+         * {@link #onPhotoRecognitionReady(Collection)} must be called with the results of
+         * the image recognition process.
+         *
+         * @param image Bitmap containing the image to be classified. The image can be
+         *              of any size, but preprocessing might occur to resize it to the
+         *              format expected by the classification process, which can be time
+         *              and power consuming.
+         */
         List<Recognition> DoRecognize(Bitmap image)
         {
             // Allocate space for the inference results
@@ -153,8 +153,8 @@ namespace imageclassifier
             }
         }
         /*
-     * Initialize the camera that will be used to capture images.
-     */
+         * Initialize the camera that will be used to capture images.
+         */
         private void InitCamera()
         {
             mImagePreprocessor = new ImagePreprocessor(PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT,
@@ -167,8 +167,8 @@ namespace imageclassifier
         }
 
         /*
-     * Clean up resources used by the camera.
-     */
+         * Clean up resources used by the camera.
+         */
         private void CloseCamera()
         {
             mCameraHandler.ShutDown();
@@ -180,6 +180,7 @@ namespace imageclassifier
          */
         private void LoadPhoto()
         {
+            _ImageView.SetImageDrawable(null);
             mCameraHandler.TakePicture();
         }
 
@@ -191,8 +192,8 @@ namespace imageclassifier
             Window.AddFlags(Android.Views.WindowManagerFlags.KeepScreenOn);
 
             SetContentView(Resource.Layout.activity_camera);
-            mImage = (ImageView)FindViewById(Resource.Id.imageView);
-            mResultText = (TextView)FindViewById(Resource.Id.resultText);
+            _ImageView = (ImageView)FindViewById(Resource.Id.imageView);
+            _ResultText = (TextView)FindViewById(Resource.Id.resultText);
 
             UpdateStatus(GetString(Resource.String.initializing));
             InitCamera();
@@ -202,13 +203,13 @@ namespace imageclassifier
         }
 
         /*
-    * Register a GPIO button that, when clicked, will generate the {@link KeyEvent#KEYCODE_ENTER}
-    * key, to be handled by {@link #onKeyUp(int, KeyEvent)} just like any regular keyboard
-    * event.
-    *
-    * If there's no button connected to the board, the doRecognize can still be triggered by
-    * sending key events using a USB keyboard or `adb shell input keyevent 66`.
-    */
+        * Register a GPIO button that, when clicked, will generate the {@link KeyEvent#KEYCODE_ENTER}
+        * key, to be handled by {@link #onKeyUp(int, KeyEvent)} just like any regular keyboard
+        * event.
+        *
+        * If there's no button connected to the board, the doRecognize can still be triggered by
+        * sending key events using a USB keyboard or `adb shell input keyevent 66`.
+        */
         private void InitButton()
         {
             try
@@ -245,14 +246,14 @@ namespace imageclassifier
          */
         async void OnPhotoReady(Bitmap bitmap)
         {
-            mImage.SetImageBitmap(bitmap);
+            _ImageView.SetImageBitmap(bitmap);
             var results = await Task.Run(() => DoRecognize(bitmap));
             OnPhotoRecognitionReady(results);
         }
 
         /*
-     * Image classification process complete
-     */
+        * Image classification process complete
+        */
         void OnPhotoRecognitionReady(List<Recognition> results)
         {
             UpdateStatus(FormatResults(results));
@@ -290,13 +291,13 @@ namespace imageclassifier
             }
         }
 
-        /**
+        /*
          * Report updates to the display and log output
          */
         void UpdateStatus(string status)
         {
             Log.Debug(TAG, status);
-            mResultText.Text = status;
+            _ResultText.Text = status;
         }
 
         ~MainActivity()

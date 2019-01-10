@@ -88,7 +88,7 @@ namespace imageclassifier
                 sortedLabels.Add(r.GetConfidence(), r);
             }
 
-            return sortedLabels.Values.Take(RESULTS_TO_SHOW).ToList();
+            return sortedLabels.Values.Take(RESULTS_TO_SHOW).Where(v => v.GetConfidence() >= 0.75f).ToList();
         }
 
         /* Writes Image data into a {@code ByteBuffer}. */

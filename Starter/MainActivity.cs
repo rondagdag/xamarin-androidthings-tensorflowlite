@@ -36,9 +36,9 @@ namespace Starter
             button.Click += delegate { button.Text = $"{count++} clicks!"; };
 
             SetupDemoShowPins();
-            //SetupDemo1();
-            //SetupDemo2();
-            //SetupDemo3();
+            SetupDemo1();
+            SetupDemo2();
+            SetupDemo3();
         }
 
         private void SetupDemoShowPins()
