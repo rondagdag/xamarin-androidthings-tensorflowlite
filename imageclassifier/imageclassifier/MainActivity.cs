@@ -211,6 +211,7 @@ namespace imageclassifier
          */
         private void LoadPhoto()
         {
+            mImage.SetImageBitmap(null);
             mCameraHandler.TakePicture();
         }
 
