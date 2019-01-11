@@ -20,6 +20,7 @@ namespace imageclassifier
     {
 
         static bool SAVE_PREVIEW_BITMAP = false;
+        static int RESIZE_SIZE = 256;
 
         Bitmap rgbFrameBitmap;
         Bitmap croppedBitmap;
@@ -75,9 +76,9 @@ namespace imageclassifier
             float translateY = -Math.Max(0, (src.Height - minDim) / 2);
             matrix.PreTranslate(translateX, translateY);
 
-            float scaleFactor = dst.Height / minDim;
-            //int RESIZE_SIZE = 256;
-            //float scaleFactor = RESIZE_SIZE / minDim;
+            //float scaleFactor = dst.Height / minDim;
+
+            float scaleFactor = RESIZE_SIZE / minDim;
             matrix.PostScale(scaleFactor, scaleFactor);
 
             // Rotate around the center if necessary.

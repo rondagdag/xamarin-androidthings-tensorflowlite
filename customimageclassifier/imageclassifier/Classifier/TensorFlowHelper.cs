@@ -104,6 +104,9 @@ namespace imageclassifier
             // Encode the image pixels into a byte buffer representation matching the expected
             // input of the Tensorflow model
 
+            /*var IMAGE_MEAN_R = 124f;
+            var IMAGE_MEAN_G = 117f;
+            var IMAGE_MEAN_B = 105f;*/
             for (int i = 0; i < intValues.Length; ++i)
             {
                 var val = intValues[i];
@@ -111,9 +114,14 @@ namespace imageclassifier
                 /*imgData.PutFloat(((val & 0xFF) - 104));
                 imgData.PutFloat((((val >> 8) & 0xFF) - 117));
                 imgData.PutFloat((((val >> 16) & 0xFF) - 123));*/
-                imgData.PutFloat(((val & 0xFF) - 104));
-                imgData.PutFloat((((val >> 8) & 0xFF) - 117));
-                imgData.PutFloat((((val >> 16) & 0xFF) - 123));
+
+                /*imgData.PutFloat(((val & 0xFF) - IMAGE_MEAN_B));
+                imgData.PutFloat((((val >> 8) & 0xFF) - IMAGE_MEAN_G));
+                imgData.PutFloat((((val >> 16) & 0xFF) - IMAGE_MEAN_R));*/
+
+                imgData.PutFloat(((val & 0xFF)));
+                imgData.PutFloat((((val >> 8) & 0xFF)));
+                imgData.PutFloat((((val >> 16) & 0xFF)));
             }
 
         }
